@@ -21,6 +21,7 @@ router.get('/', asyncMiddleware(async (req, res) => {
 // create
 router.post('/', asyncMiddleware(async (req, res) => {
   const { error } = validate(req.body);
+  console.log('req.body', req.body);
   if (error) return res.status(400).send({message: error.details[0].message});
   let user = await User.findOne({ email: req.body.email });
   if (user) return res.status(400).send({message: 'User already registered'});
@@ -33,7 +34,7 @@ router.post('/', asyncMiddleware(async (req, res) => {
 
   const result = await user.save();
 
-  res.header('x-auth-token', token).send({token});
+  res.header('x-auth-token', token).send({user});
 }));
 
 module.exports = router;

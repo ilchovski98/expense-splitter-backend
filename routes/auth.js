@@ -19,7 +19,7 @@ router.post('/', asyncMiddleware(async (req, res) => {
 
   const token = user.generateAuthToken();
 
-  res.send({token});
+  res.header('x-auth-token', token).send({user});
 }));
 
 function validate(req) {
